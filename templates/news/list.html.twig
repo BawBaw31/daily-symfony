@@ -2,15 +2,15 @@
 
 {% block body %}
 
-    <div class="py-52 flex justify-center items-center">
-        <h1 class="text-3xl">Bienvenu sur Daily Zer !</h1>
+    <div class="px-10 py-52 flex items-center lg:justify-center">
+        <h1 class="px-2 text-6xl break-all">Bienvenu sur Daily Zer !</h1>
     </div>
 
     <div class="p-10 grid grid-cols-1 justify-items-center lg:grid-cols-4">
         {% for new in news %}
-            <div class="p-2 my-2 h-52 w-full bg-gray-500 bg-opacity-50 rounded-md lg:w-11/12">
-                <h3>{{ new.name }}</h3>
-                <p>{{ new.shortDesc }}</p>
+            <div class="p-2 my-2 h-52 w-full bg-gray-500 bg-opacity-50 rounded-md shadow-xl lg:w-11/12">
+                <h3 class="font-semibold text-3xl">{{ new.name }}</h3>
+                <p class="text-xl">{{ new.shortDesc }}</p>
             </div>
         {% endfor %}
     <div>

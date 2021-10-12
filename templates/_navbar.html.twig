@@ -1,10 +1,16 @@
 {# Navbar #}
 
-<header class="w-full sticky top-0 flex">
-    <div class="flex-grow-0">Logo</div>
-    <div class="flex-grow"></div>
-    <nav class="flex-grow-0">
-        <a href="">Profile</a>
-        <a href="">Login</a>
+<header class="p-10 w-full sticky top-0 flex shadow-xl bg-gray-200">
+    <div class="hidden flex-grow-0 lg:block">
+        <a href="{{ path('home') }}">Logo</a>
+    </div>
+    <div class="hidden flex-grow lg:block"></div>
+    <nav class="w-full flex justify-between lg:flex-grow-0 lg:w-auto">
+        <div>
+            <a  href="#" class="text-2xl lg:px-5">Profile</a>
+        </div>
+        <div>
+            <a href="{{ path('app_login') }}" class="text-2xl lg:px-5">Login</a>
+        </div>
     </nav>
 </header>

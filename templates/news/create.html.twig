@@ -1,9 +1,17 @@
 {% extends 'base.html.twig' %}
 
+{% form_theme form '_forms.html.twig' %}
+
 {% block title %}Creating{% endblock %}
 
 {% block body %}
-    <h1>Créer une News</h1>
+
+<div class="py-5 px-10 w-full">
+
+    <h1 class="mb-20 text-4xl">Créer une News</h1>
+
     {{ form(form) }}
+
+</div>
 
 {% endblock %}
