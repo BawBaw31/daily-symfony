@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Security;
 
 use App\Entity\News;
 use App\Form\NewsType;
@@ -16,6 +17,11 @@ use App\Form\NewsType;
  */
 class NewsController extends AbstractController
 {
+    public function __construct(Security $security)
+    {
+       $this->security = $security;
+    }
+
     /**
      * @Route("/", name="home")
      */
@@ -35,12 +41,19 @@ class NewsController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $user = $this->security->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('home');
+        }
+
         $news = new News();
+        $news->setCreator($user);
 
         $form = $this->createForm(NewsType::class, $news);
-
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
+            
             $news = $form->getData();
 
             $entityManager = $this->getDoctrine()->getManager();

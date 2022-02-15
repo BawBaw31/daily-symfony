@@ -32,6 +32,12 @@ class News
      */
     private $short_desc;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="news")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $creator;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +75,18 @@ class News
     public function setShortDesc(string $short_desc): self
     {
         $this->short_desc = $short_desc;
+
+        return $this;
+    }
+
+    public function getCreator(): ?User
+    {
+        return $this->creator;
+    }
+
+    public function setCreator(?User $creator): self
+    {
+        $this->creator = $creator;
 
         return $this;
     }
