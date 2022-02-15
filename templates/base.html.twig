@@ -18,10 +18,12 @@
             {#{{ encore_entry_script_tags('app') }}#}
         {% endblock %}
     </head>
-    <body>
+    <body class="min-h-screen relative">
         {% include '_navbar.html.twig' %}
-        <div class="mx-auto lg:container">
+        <div class="mx-auto pb-16 lg:container">
             {% block body %}{% endblock %}
         </div>
+        {% include '_footer.html.twig' %}
+        <script type="text/javascript" src="/main.js"></script>
     </body>
 </html>

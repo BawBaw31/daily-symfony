@@ -1,16 +1,74 @@
 {# Navbar #}
 
 <header class="p-10 w-full sticky top-0 flex shadow-xl bg-gray-200">
-    <div class="hidden flex-grow-0 lg:block">
+    <div class="hidden lg:block">
         <a href="{{ path('home') }}">Logo</a>
     </div>
-    <div class="hidden flex-grow lg:block"></div>
-    <nav class="w-full flex justify-between lg:flex-grow-0 lg:w-auto">
-        <div>
-            <a  href="#" class="text-2xl lg:px-5">Profile</a>
+    <nav class="w-full flex justify-between items-center lg:w-auto lg:flex-grow lg:justify-end">
+        <div class="hidden lg:flex lg:mr-5">
+            {% if is_granted("ROLE_USER") %}
+                <a href="{{ path('create_news') }}" 
+                class="transform transition duration-500 hover:scale-150">
+                    <i class="fas fa-plus-circle fa-xl"></i>
+                </a>
+            {% endif %}
         </div>
-        <div>
-            <a href="{{ path('app_login') }}" class="text-2xl lg:px-5">Login</a>
+        {% if not is_granted("ROLE_USER") %}
+            <div>
+                <a href="{{ path('app_login') }}" class="text-2xl lg:px-5">Login</a>
+            </div>
+            <div>
+                <a href="{{ path('app_register') }}" class="text-2xl lg:px-5">Register</a>
+            </div>
+
+        {% elseif is_granted("ROLE_USER") %}
+            {# TODO finish settings button #}
+            <div class="inline-block relative lg:mr-5">
+
+                <button onClick="handleDropdown()" 
+                class="dropdown-btn text-gray-700 font-semibold
+                transform transition duration-500 hover:scale-150">
+                    <i class="dropdown-btn fas fa-cog fa-xl text-black"></i>
+                </button>
+
+                <ul id="dropdown" class="dropdown-content absolute hidden
+                text-gray-700 pt-1">
+
+                    <li class="">
+                        <a class="rounded-t bg-gray-200
+                        hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">
+                            One
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a class="bg-gray-200 
+                        hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">
+                            Two
+                        </a>
+                    </li>
+                    
+                    <li class="">
+                        <a class="rounded-b bg-gray-200 
+                        hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">
+                            Three
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        {% elseif is_granted("ROLE_ADMIN") %}
+            <div>
+                <a  href="#" class="text-2xl lg:px-5">Admin</a>
+            </div>
+        {% endif %}
+        <div class="lg:flex">
+            <a href="{{ path('home') }}" 
+            class="p-1 transform transition duration-500 hover:scale-150">
+                <i class="fas fa-home fa-xl"></i>
+            </a>
         </div>
+
+        
     </nav>
 </header>
