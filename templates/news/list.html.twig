@@ -13,6 +13,14 @@
                 <p class="text-xl">{{ new.shortDesc }}</p>
             </div>
         {% endfor %}
-    <div>
+    </div>
+    {% if is_granted("ROLE_USER") %}
+        <div class="z-10 fixed bottom-16 w-full flex justify-center lg:hidden">
+            <a href="{{ path('create_news') }}">
+                <i class="m-auto fas fa-plus-circle fa-5x"></i>
+            </a>
+        </div>
+    {% endif %}
+
 
 {% endblock %}
