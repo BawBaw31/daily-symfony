@@ -38,6 +38,16 @@ class News
      */
     private $creator;
 
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    private $created_at;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updated_at;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -89,5 +99,37 @@ class News
         $this->creator = $creator;
 
         return $this;
+    }
+    
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->created_at;
+    }
+    
+    public function setCreatedAt(\DateTimeImmutable $created_at): self
+    {
+        $this->created_at = $created_at;
+        
+        return $this;
+    }
+    
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+    
+    public function setUpdatedAt(\DateTimeInterface $updated_at): self
+    {
+        $this->updated_at = $updated_at;
+        
+        return $this;
+    }
+
+    public function updatedTimestamps(): void
+    {
+        $this->setUpdatedAt(new \DateTime('now'));    
+        if ($this->getCreatedAt() === null) {
+            $this->setCreatedAt(new \DateTimeImmutable('now'));
+        }
     }
 }

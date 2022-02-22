@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Home{% endblock %}
+
 {% block body %}
 
     <div class="px-10 py-52 flex items-center lg:justify-center">
@@ -8,10 +10,27 @@
 
     <div class="p-10 grid grid-cols-1 justify-items-center lg:grid-cols-4">
         {% for new in news %}
-            <div class="p-2 my-2 h-52 w-full bg-gray-500 bg-opacity-50 rounded-md shadow-xl lg:w-11/12">
-                <h3 class="font-semibold text-3xl">{{ new.name }}</h3>
-                <p class="text-xl">{{ new.shortDesc }}</p>
-            </div>
+            {% if new.creator == app.user %}
+                <a href="{{ path('show_news', {newId: new.id}) }}"
+                class="p-5 my-2 h-52 w-full relative bg-blue-200 bg-opacity-50 rounded-md shadow-xl 
+                transform transition duration-500 hover:scale-110 hover:bg-gray-400 lg:w-11/12">
+                    <h3 class="font-semibold text-3xl">{{ new.name }}</h3>
+                    <p class="text-xl">{{ new.shortDesc }}</p>
+                    <p class="text-l absolute bottom-5">
+                        Moi le {{ new.createdAt|date('d/m/Y') }} à {{ new.createdAt|date('H:m') }}
+                    </p>
+                </a>
+            {% else %}
+                <a href="{{ path('show_news', {newId: new.id}) }}"
+                class="p-5 my-2 h-52 w-full relative bg-gray-300 bg-opacity-50 rounded-md shadow-xl 
+                transform transition duration-500 hover:scale-110 hover:bg-gray-400 lg:w-11/12">
+                    <h3 class="font-semibold text-3xl">{{ new.name }}</h3>
+                    <p class="text-xl">{{ new.shortDesc }}</p>
+                    <p class="text-l absolute bottom-5">
+                        {{ new.creator.email }} le {{ new.createdAt|date('d/m/Y') }} à {{ new.createdAt|date('H:m') }}
+                    </p>
+                </a>
+            {% endif %}
         {% endfor %}
     </div>
     {% if is_granted("ROLE_USER") %}

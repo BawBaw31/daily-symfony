@@ -37,27 +37,42 @@ class NewsController extends AbstractController
     }
 
     /**
+     * @Route("/{newId}/show", name="show_news")
+     */
+    public function show($newId): Response
+    {
+        $new = $this->getDoctrine()
+            ->getRepository(News::class)
+            ->find($newId);
+        
+        return $this->render('news/show.html.twig', [
+            'new' => $new
+        ]);
+    }
+
+    /**
      * @Route("/create", name="create_news")
      */
-    public function new(Request $request): Response
+    public function create(Request $request): Response
     {
         $user = $this->security->getUser();
         if (!$user) {
             return $this->redirectToRoute('home');
         }
 
-        $news = new News();
-        $news->setCreator($user);
+        $new = new News();
+        $new->setCreator($user);
 
-        $form = $this->createForm(NewsType::class, $news);
+        $form = $this->createForm(NewsType::class, $new);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             
-            $news = $form->getData();
+            $new = $form->getData();
+            $new->updatedTimestamps();
 
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($news);
+            $entityManager->persist($new);
             $entityManager->flush();
 
             return $this->redirectToRoute('home');
@@ -66,6 +81,65 @@ class NewsController extends AbstractController
         return $this->renderForm('news/create.html.twig', [
             'form' => $form,
         ]);
+    }
+
+    /**
+     * @Route("/{newId}/edit", name="edit_news")
+     */
+    public function update($newId, Request $request): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $new = $entityManager->getRepository(News::class)->find($newId);
+
+        if (!$this->verifyUser($new)) {
+            return $this->redirectToRoute('home');
+        }
+
+        if (!$new) {
+            throw $this->createNotFoundException(
+                'No news item found for id '.$id
+            );
+        }
+        
+        $form = $this->createForm(NewsType::class, $new);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $new = $form->getData();
+            $new->updatedTimestamps();
+            
+            $entityManager->persist($new);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->renderForm('news/edit.html.twig', [
+            'form' => $form,
+            'new' => $new,
+        ]);
+    }
+
+    /**
+     * @Route("/{newId}/remove", name="remove_news")
+     */
+    public function remove($newId): Response
+    {
+        $new = $this->getDoctrine()
+            ->getRepository(News::class)
+            ->find($newId);
+
+        if ($this->verifyUser($new)) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($new);
+            $entityManager->flush();
+        }
+        return $this->redirectToRoute('home');
+    }
+
+    public function verifyUser($new): bool
+    {
+        return $new->getCreator() == $this->security->getUser();
     }
 
 }

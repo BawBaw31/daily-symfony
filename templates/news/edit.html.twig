@@ -2,13 +2,12 @@
 
 {% form_theme form '_forms.html.twig' %}
 
-{% block title %}Créer article{% endblock %}
+{% block title %}Modifier {{ new.name }}{% endblock %}
 
 {% block body %}
-
 <div class="py-5 px-10 w-full">
 
-    <h1 class="mb-20 text-4xl">Créer une News</h1>
+    <h1 class="mb-20 text-4xl">Modifier l'article : {{ new.name }}</h1>
 
     {{ form(form) }}
 
