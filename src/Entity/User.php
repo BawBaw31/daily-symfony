@@ -44,9 +44,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $news;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=News::class, mappedBy="likes")
+     */
+    private $likes;
+
     public function __construct()
     {
         $this->news = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -163,6 +169,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             if ($news->getCreator() === $this) {
                 $news->setCreator(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|News[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(News $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->addLike($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(News $like): self
+    {
+        if ($this->likes->removeElement($like)) {
+            $like->removeLike($this);
         }
 
         return $this;

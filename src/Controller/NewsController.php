@@ -137,6 +137,23 @@ class NewsController extends AbstractController
         return $this->redirectToRoute('home');
     }
 
+    /**
+     * @Route("/{newId}/like", name="add_like")
+     */
+    // public function like($newId): Response
+    // {
+    //     $new = $this->getDoctrine()
+    //         ->getRepository(News::class)
+    //         ->find($newId);
+
+    //     if ($this->verifyUser($new)) {
+    //         $entityManager = $this->getDoctrine()->getManager();
+    //         $entityManager->remove($new);
+    //         $entityManager->flush();
+    //     }
+    //     return $this->redirectToRoute('home');
+    // }
+
     public function verifyUser($new): bool
     {
         return $new->getCreator() == $this->security->getUser();

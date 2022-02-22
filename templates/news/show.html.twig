@@ -17,20 +17,37 @@
         <h2 class="text-3xl break-all">Article :</h2>
         <p class="text-xl break-all text-justify">{{ new.body }}</p>
     </div>
-    <div class="mb-10 p-5 w-full flex items-center">
-        <a class="pr-5" href="{{ path('home') }}">
-            <i class="far fa-arrow-alt-circle-left fa-2x"></i>
-        </a>
+    <div class="mb-10 w-full flex justify-between">
+        <div class="p-5 w-full flex items-center">
+            <a class="pr-5 transform transition duration-500 hover:scale-150" 
+            href="{{ path('home') }}">
+                <i class="far fa-arrow-alt-circle-left fa-2x"></i>
+            </a>
 
-        {% if app.user == new.creator %}
-            <a class="pr-5" href="{{ path('edit_news', {newId: new.id}) }}">
-                <i class="far fa-edit fa-2x"></i>
-            </a>
-            <a class="pr-5" href="{{ path('remove_news', {newId: new.id})}}">
-                <i class="fas fa-trash fa-2x"></i>
-            </a>
-        {% endif %}
-        
+            {% if app.user == new.creator %}
+                <a class="pr-5 transform transition duration-500 hover:scale-150" 
+                href="{{ path('edit_news', {newId: new.id}) }}">
+                    <i class="far fa-edit fa-2x"></i>
+                </a>
+                <a class="pr-5 transform transition duration-500 hover:scale-150" 
+                href="{{ path('remove_news', {newId: new.id})}}">
+                    <i class="fas fa-trash fa-2x"></i>
+                </a>
+            {% endif %}
+            
+        </div>
+        <div class="p-5 w-full flex items-center justify-end">  
+            <button class="p-2 text-s text-white rounded-md bg-black
+            hover:bg-green-500">
+                {% if app.user in new.likes %}
+                    <i class="fas fa-heart text-red-500"></i>
+                {% else %}
+                    <i class="fas fa-heart text-black-500"></i>
+                {% endif %}
+
+                {{ new.likes.count }}
+            </button>
+        </div>
     </div>
 
 {% endblock %}
