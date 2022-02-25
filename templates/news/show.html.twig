@@ -37,8 +37,8 @@
             
         </div>
         <div class="p-5 w-full flex items-center justify-end">  
-            <button class="p-2 text-s text-white rounded-md bg-black
-            hover:bg-green-500">
+            <a href="{{ path('add_like', {newId: new.id})}}" 
+            class="p-4 text-s text-white rounded-full bg-black hover:bg-green-500 lg:rounded-md">
                 {% if app.user in new.likes %}
                     <i class="fas fa-heart text-red-500"></i>
                 {% else %}
@@ -46,7 +46,7 @@
                 {% endif %}
 
                 {{ new.likes.count }}
-            </button>
+            </a>
         </div>
     </div>
 
