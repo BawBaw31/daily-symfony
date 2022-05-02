@@ -29,7 +29,21 @@ class NewsController extends AbstractController
     {
         $news = $this->getDoctrine()
             ->getRepository(News::class)
-            ->findAll();
+            ->findSortedByDate();
+
+        return $this->render('news/list.html.twig', [
+            'news' => $news
+        ]);
+    }
+
+    /**
+     * @Route("/bylikes", name="home_by_likes")
+     */
+    public function homeByLikes(): Response
+    {
+        $news = $this->getDoctrine()
+            ->getRepository(News::class)
+            ->findSortedByLike();
 
         return $this->render('news/list.html.twig', [
             'news' => $news

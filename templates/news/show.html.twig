@@ -30,7 +30,7 @@
                     <i class="far fa-edit fa-2x"></i>
                 </a>
                 <a class="pr-5 transform transition duration-500 hover:scale-150" 
-                href="{{ path('remove_news', {newId: new.id})}}">
+                href="{{ path('remove_news', {newId: new.id})}}" onclick="return confirm('Are you sure to delete : {{new.name}}')">
                     <i class="fas fa-trash fa-2x"></i>
                 </a>
             {% endif %}

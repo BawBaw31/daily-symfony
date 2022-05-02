@@ -19,6 +19,30 @@ class NewsRepository extends ServiceEntityRepository
         parent::__construct($registry, News::class);
     }
 
+    public function findSortedByLike()
+    {
+        return $likes = $this->createQueryBuilder('a')
+        ->select('COUNT(u) AS HIDDEN nbrLikes', 'a')
+        ->leftJoin('a.likes', 'u') 
+        ->orderBy('nbrLikes', 'DESC')
+        ->groupBy('a')
+        ->getQuery()
+        ->getResult();
+
+        // dd($likes);   
+    }
+    
+    public function findSortedByDate()
+    {
+        return $likes = $this->createQueryBuilder('a')
+        ->select('a')
+        ->orderBy('a.created_at', 'DESC')
+        ->getQuery()
+        ->getResult();
+    }
+
+
+
     // /**
     //  * @return News[] Returns an array of News objects
     //  */
