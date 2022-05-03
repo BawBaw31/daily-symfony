@@ -1,20 +1,20 @@
 {% extends 'base.html.twig' %}
 {% set current_params = app.request.get('_route_params') %}
 
-{% block title %}Home{% endblock %}
+{% block title %}My news{% endblock %}
 
 {% block body %}
-    <div class="px-10 py-52 flex items-center lg:justify-center">
-        <h1 class="px-2 text-6xl break-all">Bienvenu sur Daily Zer !</h1>
+    <div class="py-20 flex w-full justify-center">
+        <h1 class="px-2 text-4xl break-all">My news</h1>
     </div>
 
     <div id="filter" class="p-10 w-full flex justify-between lg:justify-start">
         {% if "likes" not in current_params %}
-            <a class="p-5 bg-blue-200 rounded-lg lg:rounded-none lg:rounded-l-lg" href="{{ path('home') }}#filter">Plus récents</a>
-            <a class="p-5 bg-gray-300 rounded-lg lg:rounded-none lg:rounded-r-lg" href="{{ path('home_ordered', {'type': 'likes'}) }}#filter">Plus aimés</a>
+            <a class="p-5 bg-blue-200 rounded-lg lg:rounded-none lg:rounded-l-lg" href="{{ path('my_news') }}#filter">Plus récents</a>
+            <a class="p-5 bg-gray-200 rounded-lg hover:bg-gray-400 lg:rounded-none lg:rounded-r-lg" href="{{ path('my_news_ordered', {'type': 'likes'}) }}#filter">Plus aimés</a>
         {% else %}
-            <a class="p-5 bg-gray-200 rounded-lg lg:rounded-none lg:rounded-l-lg" href="{{ path('home') }}#filter">Plus récents</a>
-            <a class="p-5 bg-blue-300 rounded-lg lg:rounded-none lg:rounded-r-lg" href="{{ path('home_ordered', {'type': 'likes'}) }}#filter">Plus aimés</a>
+            <a class="p-5 bg-gray-200 rounded-lg hover:bg-gray-400 lg:rounded-none lg:rounded-l-lg" href="{{ path('my_news') }}#filter">Plus récents</a>
+            <a class="p-5 bg-blue-200 rounded-lg lg:rounded-none lg:rounded-r-lg" href="{{ path('my_news_ordered', {'type': 'likes'}) }}#filter">Plus aimés</a>
         {% endif %}
     </div>
 

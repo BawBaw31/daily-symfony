@@ -24,12 +24,19 @@ class NewsController extends AbstractController
 
     /**
      * @Route("/", name="home")
+     * @Route("/order/{type}", name="home_ordered")
      */
-    public function home(): Response
+    public function home($type = null): Response
     {
-        $news = $this->getDoctrine()
-            ->getRepository(News::class)
-            ->findSortedByDate();
+        if ($type == 'likes') {
+            $news = $this->getDoctrine()
+                ->getRepository(News::class)
+                ->findSortedByLike();
+        } else {
+            $news = $this->getDoctrine()
+                ->getRepository(News::class)
+                ->findBy(array(), array('created_at' => 'DESC'));
+        }
 
         return $this->render('news/list.html.twig', [
             'news' => $news
@@ -37,15 +44,27 @@ class NewsController extends AbstractController
     }
 
     /**
-     * @Route("/bylikes", name="home_by_likes")
+     * @Route("/mynews", name="my_news")
+     * @Route("/mynews/order/{type}", name="my_news_ordered")
      */
-    public function homeByLikes(): Response
+    public function myNews($type = null): Response
     {
-        $news = $this->getDoctrine()
-            ->getRepository(News::class)
-            ->findSortedByLike();
+        $user = $this->security->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('home');
+        }
 
-        return $this->render('news/list.html.twig', [
+        if ($type == 'likes') {
+            $news = $this->getDoctrine()
+            ->getRepository(News::class)
+            ->findByUserSortedByLike($user->getId());
+        } else {
+            $news = $this->getDoctrine()
+            ->getRepository(News::class)
+            ->findBy(array('creator' => $user->getId()), array('created_at' => 'DESC'));
+        }
+
+        return $this->render('news/owned.html.twig', [
             'news' => $news
         ]);
     }

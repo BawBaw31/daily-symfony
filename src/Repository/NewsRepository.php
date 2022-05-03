@@ -31,17 +31,21 @@ class NewsRepository extends ServiceEntityRepository
 
         // dd($likes);   
     }
-    
-    public function findSortedByDate()
+
+    public function findByUserSortedByLike($userId)
     {
         return $likes = $this->createQueryBuilder('a')
-        ->select('a')
-        ->orderBy('a.created_at', 'DESC')
+        ->select('COUNT(u) AS HIDDEN nbrLikes', 'a')
+        ->where('a.creator = :user')
+        ->leftJoin('a.likes', 'u') 
+        ->orderBy('nbrLikes', 'DESC')
+        ->groupBy('a')
+        ->setParameter(':user', $userId)
         ->getQuery()
         ->getResult();
+
+        // dd($likes);   
     }
-
-
 
     // /**
     //  * @return News[] Returns an array of News objects
