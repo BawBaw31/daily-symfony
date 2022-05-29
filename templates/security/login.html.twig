@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="py-5 px-10 w-full lg:w-2/5 m-auto">
-        <form method="post">
+        <form method="post" class="mb-5">
             {% if error %}
                 <div class="text-red-600">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
             {% endif %}
@@ -45,5 +45,6 @@
                 Connexion
             </button>
         </form>
+        <a href="{{ path('app_register') }}" class="text-blue-600">S'inscrire !</a>
     </div>
 {% endblock %}

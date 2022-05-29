@@ -15,10 +15,10 @@
         </div>
         {% if not is_granted("ROLE_USER") %}
             <div>
-                <a href="{{ path('app_login') }}" class="text-2xl lg:px-5">Connexion</a>
             </div>
+                <a href="{{ path('app_login') }}" class="text-2xl border-2 border-black rounded p-1 lg:p-0 lg:pr-5 lg:border-0">Connexion</a>
             <div>
-                <a href="{{ path('app_register') }}" class="text-2xl lg:px-5">Inscription</a>
+                <a href="{{ path('app_register') }}" class="hidden text-2xl lg:pr-5 lg:block">Inscription</a>
             </div>
         {% elseif is_granted("ROLE_ADMIN") %}
             <div>
@@ -36,7 +36,7 @@
                 </button>
 
                 <ul id="dropdown" class="dropdown-content absolute hidden
-                text-gray-700 pt-1">
+                text-gray-700 pt-1 lg:-ml-24 lg:mt-3">
 
                     <li class="">
                         <a class="bg-gray-300 
@@ -57,7 +57,7 @@
         {% endif %}
         <div class="lg:flex">
             <a href="{{ path('home') }}" 
-            class="p-1 transform transition duration-500 hover:scale-150">
+            class="p-1 transform transition duration-500 hover:scale-150 lg:hidden">
                 <i class="fas fa-home fa-2x"></i>
             </a>
         </div>
