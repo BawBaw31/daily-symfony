@@ -20,13 +20,7 @@
             <div>
                 <a href="{{ path('app_register') }}" class="hidden text-2xl lg:pr-5 lg:block">Inscription</a>
             </div>
-        {% elseif is_granted("ROLE_ADMIN") %}
-            <div>
-                <a  href="#" class="text-2xl lg:px-5">Admin</a>
-            </div>
-
         {% else %}
-            {# TODO finish settings button #}
             <div class="inline-block relative lg:mr-5">
 
                 <button onClick="handleDropdown()" 
@@ -44,6 +38,15 @@
                             My news
                         </a>
                     </li>
+
+                    {% if is_granted("ROLE_ADMIN") %}
+                        <li class="">
+                            <a class="bg-gray-300 
+                            hover:bg-blue-200 py-2 px-4 block whitespace-no-wrap" href="#">
+                                Admin
+                            </a>
+                        </li>
+                    {% endif %}
                     
                     <li class="">
                         <a class="rounded-b bg-gray-300 hover:bg-blue-200 
