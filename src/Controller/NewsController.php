@@ -5,7 +5,6 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Security;
 
@@ -130,7 +129,7 @@ class NewsController extends AbstractController
 
         if (!$new) {
             throw $this->createNotFoundException(
-                'No news item found for id '.$id
+                'No news item found for id '.$newId
             );
         }
         

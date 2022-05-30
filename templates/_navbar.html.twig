@@ -42,7 +42,7 @@
                     {% if is_granted("ROLE_ADMIN") %}
                         <li class="">
                             <a class="bg-gray-300 
-                            hover:bg-blue-200 py-2 px-4 block whitespace-no-wrap" href="#">
+                            hover:bg-blue-200 py-2 px-4 block whitespace-no-wrap" href={{ path('user_index')}}>
                                 Admin
                             </a>
                         </li>
