@@ -36,7 +36,7 @@ class UserType extends AbstractType
                 ],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter the frequency',
+                        'message' => 'Please choose at least 1 role',
                     ]),
                 ],
             ])
